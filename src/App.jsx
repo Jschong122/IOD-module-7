@@ -1,19 +1,16 @@
 import "./App.css";
 import { useState } from "react";
-import { SlideWork } from "./containers/SlideWork";
+
 import { LabOne } from "./containers/LabOne";
 import { LabTwo } from "./containers/LabTwo";
-import { CustomHooks } from "./containers/CustomHooks";
+
+import LabThree from "./containers/LabThree";
 
 // COMPONENT FUNCTION NAME -> INITIALISE
 const App = () => {
   const [contentName, setContentName] = useState("");
 
-  const contentConfig = [
-    { lab: "Lab 1" },
-    { lab: "Lab 2" },
-    { lab: "Custom Hooks" },
-  ];
+  const contentConfig = [{ lab: "Lab 1" }, { lab: "Lab 2" }, { lab: "Lab 3" }];
 
   const displayHandler = () => {
     switch (contentName) {
@@ -32,7 +29,7 @@ const App = () => {
       case contentConfig[2].lab:
         return (
           <>
-            <CustomHooks />
+            <LabThree />
           </>
         );
       default:
