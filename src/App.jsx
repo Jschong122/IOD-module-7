@@ -1,21 +1,38 @@
 import "./App.css";
 import { useState } from "react";
 import { SlideWork } from "./containers/SlideWork";
-import { LabOne } from "./components/LabOne";
+import { LabOne } from "./containers/LabOne";
+import { LabTwo } from "./containers/LabTwo";
+import { CustomHooks } from "./containers/CustomHooks";
 
 // COMPONENT FUNCTION NAME -> INITIALISE
 const App = () => {
   const [contentName, setContentName] = useState("");
 
-  const contentConfig = [{ lab: "Lab 1" }];
+  const contentConfig = [
+    { lab: "Lab 1" },
+    { lab: "Lab 2" },
+    { lab: "Custom Hooks" },
+  ];
 
   const displayHandler = () => {
     switch (contentName) {
       case contentConfig[0].lab:
         return (
           <>
-            {" "}
-            <LabOne />{" "}
+            <LabOne />
+          </>
+        );
+      case contentConfig[1].lab:
+        return (
+          <>
+            <LabTwo />
+          </>
+        );
+      case contentConfig[2].lab:
+        return (
+          <>
+            <CustomHooks />
           </>
         );
       default:
@@ -64,9 +81,10 @@ const App = () => {
           display: "flex",
           margin: "0 auto",
           width: "90%",
-          height: "70vh",
-          border: "red 1px solid",
-          overflow: "scroll",
+          height: "80vh",
+          border: "lightgrey 1px solid",
+          borderRadius: "5px",
+          overflow: "auto",
         }}
       >
         {displayHandler()}

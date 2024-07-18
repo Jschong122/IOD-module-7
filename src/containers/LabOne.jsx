@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState, useReducer } from "react";
 import { BitcoinRates } from "../components/BitcoinRate";
 
 export const LabOne = () => {
@@ -8,7 +8,6 @@ export const LabOne = () => {
 
   return (
     <div>
-      <p>Lab One</p>
       <BitcoinRates />
     </div>
   );

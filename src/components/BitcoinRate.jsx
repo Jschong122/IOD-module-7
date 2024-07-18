@@ -1,35 +1,40 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import useFetchData from "../data/hooks/useFetchData";
 
 const currencies = ["USD", "AUD", "NZD", "GBP", "EUR", "SGD"];
 
 export function BitcoinRates() {
   const [currency, setCurrency] = useState(currencies[0]);
   const [rate, setRate] = useState(0);
+  const { data, error } = useFetchData(
+    `https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=${currency}`
+  );
 
   //   fetch URL: https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=${currency}
 
-  async function getData() {
-    const url = `https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=${currency}`;
-    try {
-      const response = await fetch(url);
-      if (!response.ok) {
-        throw new Error(`Response status: ${response.status}`);
-      }
+  // async function getData() {
+  //   const url = `https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=${currency}`;
+  //   try {
+  //     const response = await fetch(url);
+  //     if (!response.ok) {
+  //       throw new Error(`Response status: ${response.status}`);
+  //     }
 
-      const json = await response.json();
-      console.log(json);
-      setRate(json.bitcoin[currency.toLowerCase()]);
-    } catch (error) {
-      console.error(error.message);
-    }
-  }
-  getData();
+  //     const json = await response.json();
+  //     console.log(json);
+  //     setRate(json.bitcoin[currency.toLowerCase()]);
+  //   } catch (error) {
+  //     console.error(error.message);
+  //   }
+  // }
+  // getData();
 
   useEffect(() => {
-    console.log("the price is : ", currency, [currency]);
-  });
-
+    if (data) {
+      setRate(data.bitcoin[currency.toLowerCase()]);
+    }
+  }, [data, currency]);
   const options = currencies.map((curr) => (
     <option value={curr} key={curr}>
       {curr}
@@ -46,9 +51,13 @@ export function BitcoinRates() {
       </label>
 
       <div className="display-area">
-        <p>
-          1 Bitcoin = {rate} {currency}{" "}
-        </p>
+        {error ? (
+          <p>Error fetching data: {error.message}</p>
+        ) : (
+          <p>
+            1 Bitcoin = {rate} {currency}
+          </p>
+        )}
       </div>
     </div>
   );
